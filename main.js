@@ -30,9 +30,9 @@ const server = http.createServer(async (req, res) => {
     res.end();
   }
   res.write('Hello World');
-  res.end();
+  res.end('hi');
 });
 
-server.listen(3000, () => {
-  console.log('Server running on http://localhost:3000');
+server.listen(5001, () => {
+  console.log('Server running on http://localhost:5001');
 });

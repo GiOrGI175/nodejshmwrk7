@@ -3,7 +3,7 @@ import fs from 'fs/promises';
 export async function readFile(filePath, isParsed) {
   if (!filePath) return null;
 
-  const data = await fs.filePath.readFile(filePath, 'utf-8');
+  const data = await fs.readFile(filePath, 'utf-8');
   return isParsed ? JSON.parse(data) : data;
 }
 
