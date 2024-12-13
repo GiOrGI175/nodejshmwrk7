@@ -27,27 +27,52 @@ const server = http.createServer(async (req, res) => {
   // console.log(queryParams, 'queryParams');
 
   if (parsedUrl.pathname === '/users') {
+    res.setHeader('Content-type', 'application/json');
     // console.log(queryParams.firstName, 'queryParams.firstName');
+
+    if (queryParams.firstName && queryParams.age && queryParams.gender) {
+      const filteredUsers = users.filter(
+        (item) =>
+          item.firstName.includes(queryParams.firstName) &&
+          item.age === Number(queryParams.age) &&
+          item.gender === queryParams.gender
+      );
+      res.write(JSON.stringify(filteredUsers));
+      return res.end();
+    }
     if (queryParams.firstName) {
       const filteredUsers = users.filter((item) =>
         item.firstName.includes(queryParams.firstName)
       );
-      res.setHeader('Content-type', 'application/json');
       res.write(JSON.stringify(filteredUsers));
-      res.end();
-      return;
+      return res.end();
+    }
+
+    if (queryParams.age) {
+      const filteredByAge = users.filter(
+        (item) => item.age === Number(queryParams.age)
+      );
+      res.write(JSON.stringify(filteredByAge));
+      return res.end();
+    }
+
+    if (queryParams.gender) {
+      const filteredByGender = users.filter(
+        (item) => item.gender === queryParams.gender
+      );
+      res.write(JSON.stringify(filteredByGender));
+      return res.end();
     }
 
     res.setHeader('Content-type', 'application/json');
     res.write(JSON.stringify(users));
-    res.end();
-    return;
+    return res.end();
   }
+
   if (req.url === '/home') {
     res.setHeader('Content-type', 'text/html');
     res.write('<h1>Home Page</h1>');
-    res.end();
-    return;
+    return res.end();
   }
 
   res.write('Hello World');
